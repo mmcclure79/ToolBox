@@ -24,12 +24,13 @@ $InitialADFormWindowState = New-Object System.Windows.Forms.FormWindowState
 $handler_ADLookUpButton_Click=
 {
 $UNAME = $GUITextbox1.Text | Out-String -AsPlainText
-$NetUser = Net user $UNAME /domain | Out-String
-$GetAD = Get-ADUser $UNAME -Properties * | Out-String
+$GLOBAL:NetUser = Net user $UNAME /domain | Out-String
+$GLOBAL:GetAD = Get-ADUser $UNAME -Properties * | Out-String
 # Uncomment the following for testing of data Presentation
 # $NetUser = [IO.File]::ReadAllText(".\net user out.txt")
 # $GetAD = [IO.File]::ReadAllText(".\getaduser.txt")
-write-host = $uname
+adoutput
+
 $ADForm.Text = “AD Results”
 $ADForm.Name = “ADResults”
 $ADForm.DataBindings.DefaultDataSourceUpdateMode = 0
