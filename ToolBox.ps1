@@ -10,10 +10,7 @@ $adminRole = [System.Security.Principal.WindowsBuiltInRole]::Administrator;
 # Check to see if we are currently running as an administrator
 if ($myWindowsPrincipal.IsInRole($adminRole))
 {
-    # We are running as an administrator, so change the title and background colour to indicate this
-    $Host.UI.RawUI.WindowTitle = $myInvocation.MyCommand.Definition + "(Elevated)";
-    $Host.UI.RawUI.BackgroundColor = "DarkBlue";
-    Clear-Host;
+    # We are running as an administrator, so keep going. This is a GUI so no cli windows needed.
 }
 else {
     # We are not running as an administrator, so relaunch as administrator
@@ -57,7 +54,9 @@ $ToolBoxForm = New-Object System.Windows.Forms.Form
 $AddWiFiButton = New-Object System.Windows.Forms.Button
 $ADLookupButton = New-Object System.Windows.Forms.Button
 $RestartSpoolerButton = New-Object System.Windows.Forms.Button
+$SysUpTimeButton = New-Object System.Windows.Forms.Button
 $WifiBounceButton = New-Object System.Windows.Forms.Button
+$AzureLookupButton = New-Object System.Windows.Forms.Button
 $InitialFormWindowState = New-Object System.Windows.Forms.FormWindowState
 $Icon = New-Object system.drawing.icon ("$ToolboxRoot\Toolbox.ico");
 $ToolBoxForm.Icon = $Icon;
@@ -93,6 +92,12 @@ wifibounce
 export-Module $ToolboxRoot\modules\WifiBounce\bouncewifi.psm1
 }
 
+$handler_SysUpTimeButton_Click=
+{
+$UTIME = systeminfo | find "System Boot Time"
+[System.Windows.forms.MessageBox]::Show($UTIME)
+}
+
 $OnLoadForm_StateCorrection=
 {#Correct the initial state of the form to prevent the .Net maximized form issue
 $ToolBoxForm.WindowState = $InitialFormWindowState
@@ -110,7 +115,7 @@ $ToolBoxForm.ClientSize = $System_Drawing_Size
 $ToolBoxForm.StartPosition = "CenterScreen"
 
 #ADLookup Button
-$ADLookupButton.Name = “AddWiFiButton”
+$ADLookupButton.Name = “ADLookupButton”
 $System_Drawing_Size = New-Object System.Drawing.Size
 $System_Drawing_Size.Width = 150
 $System_Drawing_Size.Height = 23
@@ -129,6 +134,27 @@ $ADLookupButton.add_Click($handler_ADLookupButton_Click)
 $ToolBoxForm.Controls.Add($ADLookupButton)
 #End ADLookup BUtton
 
+#AzureLookup Button
+$AzureLookupButton.Name = “Azure Lookup Button”
+$System_Drawing_Size = New-Object System.Drawing.Size
+$System_Drawing_Size.Width = 150
+$System_Drawing_Size.Height = 23
+$AzureLookupButton.Size = $System_Drawing_Size
+$AzureLookupButton.UseVisualStyleBackColor = $True
+
+$AzureLookupButton.Text = “Azure Lookup”
+
+$System_Drawing_Point = New-Object System.Drawing.Point
+$System_Drawing_Point.X = 10
+$System_Drawing_Point.Y = 33
+$AzureLookupButton.Location = $System_Drawing_Point
+$AzureLookupButton.DataBindings.DefaultDataSourceUpdateMode = 0
+$AzureLookupButton.add_Click($handler_AzureLookupButton_Click)
+
+$ToolBoxForm.Controls.Add($AzureLookupButton)
+#End AzureLookup Button
+
+
 #AddWifi Button$AddWiFiButton.Name = “AddWiFiButton”
 $System_Drawing_Size = New-Object System.Drawing.Size
 $System_Drawing_Size.Width = 150
@@ -140,7 +166,7 @@ $AddWiFiButton.Text = “Add WiFi”
 
 $System_Drawing_Point = New-Object System.Drawing.Point
 $System_Drawing_Point.X = 10
-$System_Drawing_Point.Y = 35
+$System_Drawing_Point.Y = 55
 $AddWiFiButton.Location = $System_Drawing_Point
 $AddWiFiButton.DataBindings.DefaultDataSourceUpdateMode = 0
 $AddWiFiButton.add_Click($handler_AddWiFiButton_Click)
@@ -158,8 +184,8 @@ $WiFiBounceButton.UseVisualStyleBackColor = $True
 $WiFiBounceButton.Text = “Bounce WiFi”
 
 $System_Drawing_Point = New-Object System.Drawing.Point
-$System_Drawing_Point.X = 10
-$System_Drawing_Point.Y = 60
+$System_Drawing_Point.X = 180
+$System_Drawing_Point.Y = 10
 $WiFiBounceButton.Location = $System_Drawing_Point
 $WiFiBounceButton.DataBindings.DefaultDataSourceUpdateMode = 0
 $WiFiBounceButton.add_Click($handler_WiFiBounceButton_Click)
@@ -180,13 +206,34 @@ $RestartSpoolerButton.Text = “Restart Printers”
 
 $System_Drawing_Point = New-Object System.Drawing.Point
 $System_Drawing_Point.X = 180
-$System_Drawing_Point.Y = 10
+$System_Drawing_Point.Y = 32
 $RestartSpoolerButton.Location = $System_Drawing_Point
 $RestartSpoolerButton.DataBindings.DefaultDataSourceUpdateMode = 0
 $RestartSpoolerButton.add_Click($handler_RestartSpoolerButton_Click)
 
 $ToolBoxForm.Controls.Add($RestartSpoolerButton)
-#End Print Spooler BUtton
+#End Print Spooler Button
+
+#System Up Time Button
+$SysUpTimeButton.Name = “System UpTime”
+$System_Drawing_Size = New-Object System.Drawing.Size
+$System_Drawing_Size.Width = 150
+$System_Drawing_Size.Height = 23
+$SysUpTimeButton.Size = $System_Drawing_Size
+$SysUpTimeButton.UseVisualStyleBackColor = $True
+
+$SysUpTimeButton.Text = “System Uptime”
+
+$System_Drawing_Point = New-Object System.Drawing.Point
+$System_Drawing_Point.X = 180
+$System_Drawing_Point.Y = 55
+$SysUpTimeButton.Location = $System_Drawing_Point
+$SysUpTimeButton.DataBindings.DefaultDataSourceUpdateMode = 0
+$SysUpTimeButton.add_Click($handler_SysUpTimeButton_Click)
+
+$ToolBoxForm.Controls.Add($SysUpTimeButton)
+#End Sys UpTime Button
+
 
 #endregion Generated Form Code
 
