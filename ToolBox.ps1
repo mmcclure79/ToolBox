@@ -46,7 +46,7 @@ function ToolBox {
 #region Import the Assemblies
 [reflection.assembly]::loadwithpartialname(“System.Windows.Forms”) | Out-Null
 [reflection.assembly]::loadwithpartialname(“System.Drawing”) | Out-Null
-<system.windows.forms jitDebugging="true" />
+#<system.windows.forms jitDebugging="true" />
 #endregion
 
 #region Generated Form Objects
@@ -78,6 +78,14 @@ $handler_ADLookupButton_Click=
 Import-Module $ToolboxRoot\modules\ADLookup\ADLookup.psm1
 ADLookup
 }
+
+$handler_AzureLookupButton_Click =
+{
+Import-Module $ToolboxRoot\modules\AzureLookup\AzureLookup.psm1
+Import-Module $ToolboxRoot\modules\AzureLookup\Out.psm1
+AzureLookup
+}
+
 $handler_RestartSpoolerButton_Click =
 {
 Import-Module $ToolboxRoot\modules\PrintSpooler\RestartPrintSPooler.psm1

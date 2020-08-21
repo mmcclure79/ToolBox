@@ -26,9 +26,9 @@ $ADForm.StartPosition = "CenterScreen"
 
 $ADTextBox = New-Object System.Windows.Forms.TextBox 
 $ADTextBox.Location = New-Object System.Drawing.Size(10,10) 
-# $ADTextBox.Multiline = True
-# $ADTextBox.ScrollBars = Vertical
-# $ADTextBox.WordWrap = true
+$ADTextBox.Multiline = $True
+$ADTextBox.ScrollBars = "Both"
+$ADTextBox.WordWrap = $True
 $ADTextBox.Width = 200
 $ADTextBox.Height = 400
 $ADTextBox.Text = $NETUSER + $GETAD
