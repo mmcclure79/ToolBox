@@ -130,7 +130,7 @@ $System_Drawing_Size.Height = 23
 $ADLookupButton.Size = $System_Drawing_Size
 $ADLookupButton.UseVisualStyleBackColor = $True
 
-$ADLookupButton.Text = “AD Lookup”
+$ADLookupButton.Text = “AD User Lookup”
 
 $System_Drawing_Point = New-Object System.Drawing.Point
 $System_Drawing_Point.X = 10
@@ -150,7 +150,7 @@ $System_Drawing_Size.Height = 23
 $AzureLookupButton.Size = $System_Drawing_Size
 $AzureLookupButton.UseVisualStyleBackColor = $True
 
-$AzureLookupButton.Text = “Azure Lookup”
+$AzureLookupButton.Text = “Azure User Lookup”
 
 $System_Drawing_Point = New-Object System.Drawing.Point
 $System_Drawing_Point.X = 10
