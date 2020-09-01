@@ -102,8 +102,8 @@ export-Module $ToolboxRoot\modules\WifiBounce\bouncewifi.psm1
 
 $handler_SysUpTimeButton_Click=
 {
-$UTIME = systeminfo | find "System Boot Time"
-[System.Windows.forms.MessageBox]::Show($UTIME)
+$UTIME = (Get-CimInstance -class Win32_OperatingSystem).LastBootUpTime
+[System.Windows.forms.MessageBox]::Show("System Running since: " +$UTIME)
 }
 
 $OnLoadForm_StateCorrection=
