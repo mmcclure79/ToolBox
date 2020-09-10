@@ -26,9 +26,6 @@ $handler_ADLookUpButton_Click=
 $UNAME = $GUITextbox1.Text | Out-String -AsPlainText
 $GLOBAL:NetUser = Net user $UNAME /domain | Out-String
 $GLOBAL:GetAD = Get-ADUser $UNAME -Properties * | Out-String
-# Uncomment the following for testing of data Presentation
-# $NetUser = [IO.File]::ReadAllText(".\net user out.txt")
-# $GetAD = [IO.File]::ReadAllText(".\getaduser.txt")
 adoutput
 
 $ADForm.Text = “AD Results”

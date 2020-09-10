@@ -1,4 +1,15 @@
-﻿function RunAsAdmin
+﻿if ((get-host).version.major -lt 5)
+{
+$wsh = New-Object -ComObject Wscript.Shell
+$wsh.popup("Powershell is less than v.5 Not everything is guaranteed to work.",5,"Powershell Warning",48)
+}
+if ((Get-CimInstance -class Win32_OperatingSystem).BuildNumber -lt 18363)
+{
+$wsh = New-Object -ComObject Wscript.Shell
+$wsh.popup("Not running Windows 10, Build 18363 Not everything is guaranteed to work.",5,"Windows Warning",48)
+}
+
+function RunAsAdmin
 {
 # Get the ID and security principal of the current user account
 $myWindowsID = [System.Security.Principal.WindowsIdentity]::GetCurrent();
@@ -57,6 +68,7 @@ $RestartSpoolerButton = New-Object System.Windows.Forms.Button
 $SysUpTimeButton = New-Object System.Windows.Forms.Button
 $WifiBounceButton = New-Object System.Windows.Forms.Button
 $AzureLookupButton = New-Object System.Windows.Forms.Button
+$SysStatButton = New-Object System.Windows.Forms.Button
 $InitialFormWindowState = New-Object System.Windows.Forms.FormWindowState
 $Icon = New-Object system.drawing.icon ("$ToolboxRoot\Toolbox.ico");
 $ToolBoxForm.Icon = $Icon;
@@ -103,7 +115,18 @@ export-Module $ToolboxRoot\modules\WifiBounce\bouncewifi.psm1
 $handler_SysUpTimeButton_Click=
 {
 $UTIME = (Get-CimInstance -class Win32_OperatingSystem).LastBootUpTime
-[System.Windows.forms.MessageBox]::Show("System Running since: " +$UTIME)
+$wsh = New-Object -ComObject Wscript.Shell
+$wsh.popup($UTIME,5,"System Last Booted",48)
+#[System.Windows.forms.MessageBox]::Show("System Running since: " +$UTIME)
+}
+$handler_SysStatButton_Click=
+{
+Import-Module $ToolboxRoot\modules\SysStats\sysstats.psm1
+SysInfo
+Disk
+RAM
+NetStat
+SysOutput
 }
 
 $OnLoadForm_StateCorrection=
@@ -117,8 +140,8 @@ $ToolBoxForm.Text = “Tool Box”
 $ToolBoxForm.Name = “ToolBoxForm”
 $ToolBoxForm.DataBindings.DefaultDataSourceUpdateMode = 0
 $System_Drawing_Size = New-Object System.Drawing.Size
-$System_Drawing_Size.Width = 400
-$System_Drawing_Size.Height = 100
+$System_Drawing_Size.Width = 350
+$System_Drawing_Size.Height = 150
 $ToolBoxForm.ClientSize = $System_Drawing_Size
 $ToolBoxForm.StartPosition = "CenterScreen"
 
@@ -222,6 +245,27 @@ $RestartSpoolerButton.add_Click($handler_RestartSpoolerButton_Click)
 $ToolBoxForm.Controls.Add($RestartSpoolerButton)
 #End Print Spooler Button
 
+#System Stats Button 
+$SysStatButton.Name = “SystemStatus”
+$System_Drawing_Size = New-Object System.Drawing.Size
+$System_Drawing_Size.Width = 150
+$System_Drawing_Size.Height = 23
+$SysStatButton.Size = $System_Drawing_Size
+$SysStatButton.UseVisualStyleBackColor = $True
+
+$SysStatButton.Text = “System Status”
+
+$System_Drawing_Point = New-Object System.Drawing.Point
+$System_Drawing_Point.X = 180
+$System_Drawing_Point.Y = 55
+$SysStatButton.Location = $System_Drawing_Point
+$SysStatButton.DataBindings.DefaultDataSourceUpdateMode = 0
+$SysStatButton.add_Click($handler_SysStatButton_Click)
+
+$ToolBoxForm.Controls.Add($SysStatButton)
+
+#End System Stats Button
+
 #System Up Time Button
 $SysUpTimeButton.Name = “System UpTime”
 $System_Drawing_Size = New-Object System.Drawing.Size
@@ -234,7 +278,7 @@ $SysUpTimeButton.Text = “System Uptime”
 
 $System_Drawing_Point = New-Object System.Drawing.Point
 $System_Drawing_Point.X = 180
-$System_Drawing_Point.Y = 55
+$System_Drawing_Point.Y = 78
 $SysUpTimeButton.Location = $System_Drawing_Point
 $SysUpTimeButton.DataBindings.DefaultDataSourceUpdateMode = 0
 $SysUpTimeButton.add_Click($handler_SysUpTimeButton_Click)
