@@ -69,6 +69,7 @@ $SysUpTimeButton = New-Object System.Windows.Forms.Button
 $WifiBounceButton = New-Object System.Windows.Forms.Button
 $AzureLookupButton = New-Object System.Windows.Forms.Button
 $SysStatButton = New-Object System.Windows.Forms.Button
+$AzureResetButton = New-Object System.Windows.Forms.Button
 $InitialFormWindowState = New-Object System.Windows.Forms.FormWindowState
 $Icon = New-Object system.drawing.icon ("$ToolboxRoot\Toolbox.ico");
 $ToolBoxForm.Icon = $Icon;
@@ -78,12 +79,7 @@ $ToolBoxForm.Icon = $Icon;
 #Generated Event Script Blocks
 #———————————————-
 #Provide Custom Code for events specified in PrimalForms.
-$handler_AddWiFiButton_Click=
-{
-Import-Module $ToolboxRoot\modules\WifiPlus\wifiplus.psm1
-wifiplus
-export-Module $ToolboxRoot\modules\WifiPlus\wifiplus.psm1
-}
+
 
 $handler_ADLookupButton_Click=
 {
@@ -91,11 +87,23 @@ Import-Module $ToolboxRoot\modules\ADLookup\ADLookup.psm1
 ADLookup
 }
 
+$handler_AzureResetButton_Click =
+{
+& $ToolboxRoot\modules\AzureReset\AzurePswdRset.ps1
+}
+
 $handler_AzureLookupButton_Click =
 {
 Import-Module $ToolboxRoot\modules\AzureLookup\AzureLookup.psm1
 Import-Module $ToolboxRoot\modules\AzureLookup\Out.psm1
 AzureLookup
+}
+
+$handler_AddWiFiButton_Click=
+{
+Import-Module $ToolboxRoot\modules\WifiPlus\wifiplus.psm1
+wifiplus
+export-Module $ToolboxRoot\modules\WifiPlus\wifiplus.psm1
 }
 
 $handler_RestartSpoolerButton_Click =
@@ -165,6 +173,26 @@ $ADLookupButton.add_Click($handler_ADLookupButton_Click)
 $ToolBoxForm.Controls.Add($ADLookupButton)
 #End ADLookup BUtton
 
+#AzureRset Button
+$AzureResetButton.Name = “Azure Reset Button”
+$System_Drawing_Size = New-Object System.Drawing.Size
+$System_Drawing_Size.Width = 150
+$System_Drawing_Size.Height = 23
+$AzureResetButton.Size = $System_Drawing_Size
+$AzureResetButton.UseVisualStyleBackColor = $True
+
+$AzureResetButton.Text = “Azure Password Reset”
+
+$System_Drawing_Point = New-Object System.Drawing.Point
+$System_Drawing_Point.X = 10
+$System_Drawing_Point.Y = 33
+$AzureResetButton.Location = $System_Drawing_Point
+$AzureResetButton.DataBindings.DefaultDataSourceUpdateMode = 0
+$AzureResetButton.add_Click($handler_AzureResetButton_Click)
+
+$ToolBoxForm.Controls.Add($AzureResetButton)
+#End AzureReset Button
+
 #AzureLookup Button
 $AzureLookupButton.Name = “Azure Lookup Button”
 $System_Drawing_Size = New-Object System.Drawing.Size
@@ -177,7 +205,7 @@ $AzureLookupButton.Text = “Azure User Lookup”
 
 $System_Drawing_Point = New-Object System.Drawing.Point
 $System_Drawing_Point.X = 10
-$System_Drawing_Point.Y = 33
+$System_Drawing_Point.Y = 56
 $AzureLookupButton.Location = $System_Drawing_Point
 $AzureLookupButton.DataBindings.DefaultDataSourceUpdateMode = 0
 $AzureLookupButton.add_Click($handler_AzureLookupButton_Click)
@@ -185,8 +213,8 @@ $AzureLookupButton.add_Click($handler_AzureLookupButton_Click)
 $ToolBoxForm.Controls.Add($AzureLookupButton)
 #End AzureLookup Button
 
-
-#AddWifi Button$AddWiFiButton.Name = “AddWiFiButton”
+#AddWifi Button
+$AddWiFiButton.Name = “AddWiFiButton”
 $System_Drawing_Size = New-Object System.Drawing.Size
 $System_Drawing_Size.Width = 150
 $System_Drawing_Size.Height = 23
@@ -197,7 +225,7 @@ $AddWiFiButton.Text = “Add WiFi”
 
 $System_Drawing_Point = New-Object System.Drawing.Point
 $System_Drawing_Point.X = 10
-$System_Drawing_Point.Y = 55
+$System_Drawing_Point.Y = 79
 $AddWiFiButton.Location = $System_Drawing_Point
 $AddWiFiButton.DataBindings.DefaultDataSourceUpdateMode = 0
 $AddWiFiButton.add_Click($handler_AddWiFiButton_Click)
