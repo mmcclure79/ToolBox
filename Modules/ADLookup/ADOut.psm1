@@ -1,9 +1,11 @@
 function ADOutput
 {
 #region Import the Assemblies
-[reflection.assembly]::loadwithpartialname(“System.Windows.Forms”) | Out-Null
-[reflection.assembly]::loadwithpartialname(“System.Drawing”) | Out-Null
+[reflection.assembly]::loadwithpartialname("System.Windows.Forms") | Out-Null
+[reflection.assembly]::loadwithpartialname("System.Drawing") | Out-Null
 #End Region
+
+
 
 #region Generated Form Objects
 $ADForm = New-Object System.Windows.Forms.Form
@@ -14,8 +16,8 @@ $InitialFormWindowState = New-Object System.Windows.Forms.FormWindowState
 
 
 #region Generated Form Code
-$ADForm.Text = “AD Results”
-$ADForm.Name = “ADResults”
+$ADForm.Text = "AD Results"
+$ADForm.Name = "ADResults"
 $ADForm.DataBindings.DefaultDataSourceUpdateMode = 0
 $System_Drawing_Size = New-Object System.Drawing.Size
 $System_Drawing_Size.Width = 280
@@ -31,7 +33,7 @@ $ADTextBox.ScrollBars = "Both"
 $ADTextBox.WordWrap = $True
 $ADTextBox.Width = 200
 $ADTextBox.Height = 400
-$ADTextBox.Text = $NETUSER + $GETAD
+$ADTextBox.Text = $NETUser + $GETAD
 $ADForm.Controls.Add($ADTextBox)
 
 

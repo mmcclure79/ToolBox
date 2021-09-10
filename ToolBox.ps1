@@ -281,7 +281,7 @@ $System_Drawing_Size.Height = 23
 $SysStatButton.Size = $System_Drawing_Size
 $SysStatButton.UseVisualStyleBackColor = $True
 
-$SysStatButton.Text = “System Status”
+$SysStatButton.Text = “System Specs”
 
 $System_Drawing_Point = New-Object System.Drawing.Point
 $System_Drawing_Point.X = 180

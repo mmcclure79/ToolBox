@@ -23,7 +23,7 @@ $InitialADFormWindowState = New-Object System.Windows.Forms.FormWindowState
 #Provide Custom Code for events specified in PrimalForms.
 $handler_ADLookUpButton_Click=
 {
-$UNAME = $GUITextbox1.Text | Out-String -force -AsPlainText
+$UNAME = $GUITextbox1.Text | Out-String
 $GLOBAL:NetUser = Net user $UNAME /domain | Out-String
 $GLOBAL:GetAD = Get-ADUser $UNAME -Properties * | Out-String
 adoutput
@@ -79,5 +79,5 @@ $GUI.add_Load($OnLoadFormGUI_StateCorrection)
 #Show the Form
 $GUI.ShowDialog()| Out-Null
 }
-
+ADLookup
 
