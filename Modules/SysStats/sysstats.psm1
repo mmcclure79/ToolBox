@@ -60,7 +60,7 @@ $wsh.popup("Getting Network Information",2,"",0)
 
 #Replace the Download URL to where you've uploaded the ZIP file yourself. We will only download this file once. 
 #Latest version can be found at: https://www.speedtest.net/nl/apps/cli
-$DownloadURL = "https://bintray.com/ookla/download/download_file?file_path=ookla-speedtest-1.0.0-win64.zip"
+$DownloadURL = "https://install.speedtest.net/app/cli/ookla-speedtest-1.2.0-win64.zip"
 $DownloadLocation = "$($Env:ProgramData)\SpeedtestCLI"
 try {
     $TestDownloadLocation = Test-Path $DownloadLocation
